@@ -15,6 +15,6 @@ sudo chmod +x kubectl
 sudo mv kubectl /usr/local/bin/
 sudo curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
-sudo minikube start --driver=docker
+minikube start --driver=docker
 sudo minikube status
 sudo kubectl get nodes
