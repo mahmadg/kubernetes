@@ -7,7 +7,7 @@ sudo dnf install dnf-plugins-core
 sudo yum install -y yum-utils
 sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 sudo yum -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin --allowerasing
-sudo systemctl start docker && systemctl enable docker
+sudo systemctl enable docker --now
 sudo usermod -aG docker $USER && sudo newgrp docker
 sudo curl -LO https://dl.k8s.io/release/v1.31.0/bin/linux/amd64/kubectl
 sudo chmod +x kubectl && sudo mv kubectl /usr/local/bin/
