@@ -1,7 +1,7 @@
 sudo yum -y install epel-release
 sudo yum -y update
 sudo reboot
-sudo yum -y install apt-transport-https ca-certificates curl software-properties-comm
+sudo yum -y install apt-transport-https ca-certificates curl software-properties-comm dnf-plugins-core
 sudo dnf install dnf-plugins-core
 sudo yum install -y yum-utils
 sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
