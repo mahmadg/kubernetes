@@ -1,18 +1,95 @@
-memory should be 4GB
-sudo yum -y install epel-release
-sudo yum -y update
-sudo reboot
-sudo yum -y install apt-transport-https ca-certificates curl software-properties-comm dnf-plugins-core
-sudo dnf install dnf-plugins-core
-sudo yum install -y yum-utils
-sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-sudo yum -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin --allowerasing
-sudo systemctl enable docker --now
-sudo usermod -aG docker $USER && sudo newgrp docker
-sudo curl -LO https://dl.k8s.io/release/v1.31.0/bin/linux/amd64/kubectl
-sudo chmod +x kubectl && sudo mv kubectl /usr/local/bin/
-sudo curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-sudo install minikube-linux-amd64 /usr/local/bin/minikube
-minikube start --driver=docker
-minikube status
-kubectl get nodes
+Do these on All Nodes
+
+Step 1: Install Kernel Headers
+sudo dnf install kernel-devel-$(uname -r)
+
+Step 2: Add Kernel Modules
+sudo modprobe br_netfilter
+sudo modprobe ip_vs
+sudo modprobe ip_vs_rr
+sudo modprobe ip_vs_wrr
+sudo modprobe ip_vs_sh
+sudo modprobe overlay
+
+sudo cat > /etc/modules-load.d/kubernetes.conf << EOF
+br_netfilter
+ip_vs
+ip_vs_rr
+ip_vs_wrr
+ip_vs_sh
+overlay
+EOF
+
+Step 3: Configure Sysctl
+cat > /etc/sysctl.d/kubernetes.conf << EOF
+net.ipv4.ip_forward = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+
+sysctl --system
+
+Step 4: Disabling Swap
+sudo swapoff -a
+sed -e '/swap/s/^/#/g' -i /etc/fstab
+
+Step 5: Install Containerd
+sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo dnf makecache
+sudo dnf -y install containerd.io
+cat /etc/containerd/config.toml
+sudo sh -c "containerd config default > /etc/containerd/config.toml" ; cat /etc/containerd/config.toml
+sudo vim /etc/containerd/config.toml  
+set the SystemdCgroup variable to true (SystemdCgroup = true)
+sudo systemctl enable --now containerd.service
+sudo systemctl reboot
+sudo systemctl status containerd.service
+
+
+Step 6: Configure Firewall if Running 
+sudo firewall-cmd --zone=public --permanent --add-port=6443/tcp
+sudo firewall-cmd --zone=public --permanent --add-port=2379-2380/tcp
+sudo firewall-cmd --zone=public --permanent --add-port=10250/tcp
+sudo firewall-cmd --zone=public --permanent --add-port=10251/tcp
+sudo firewall-cmd --zone=public --permanent --add-port=10252/tcp
+sudo firewall-cmd --zone=public --permanent --add-port=10255/tcp
+sudo firewall-cmd --zone=public --permanent --add-port=5473/tcp
+
+sudo firewall-cmd --reload
+
+Step 7: Install Kubernetes Components
+cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://pkgs.k8s.io/core:/stable:/v1.29/rpm/
+enabled=1
+gpgcheck=1
+gpgkey=https://pkgs.k8s.io/core:/stable:/v1.29/rpm/repodata/repomd.xml.key
+exclude=kubelet kubeadm kubectl cri-tools kubernetes-cni
+EOF
+
+dnf makecache; dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+systemctl enable --now kubelet.service
+
+Now Work on Master Node Only
+
+Step 8: Initializing Kubernetes Control Plane
+sudo kubeadm config images pull
+sudo kubeadm init --pod-network-cidr=192.168.1.0/24            # Change the Cidr According to your network
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/tigera-operator.yaml
+curl -O https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/custom-resources.yaml
+sed -i 's/cidr: 192\.168\.0\.0\/16/cidr: 192.168.1.0\/24/g' custom-resources.yaml
+kubectl create -f custom-resources.yaml
+
+Step 9: Join Worker Nodes
+sudo kubeadm token create --print-join-command
+
+Run on Worker Nodes
+sudo kubeadm join <MASTER_IP>:<MASTER_PORT> --token <TOKEN> --discovery-token-ca-cert-hash <DISCOVERY_TOKEN_CA_CERT_HASH>    #Output after Previous Command
+
+Run on Master Node
+kubectl get nodes   #Verify Worker Node Join
+
