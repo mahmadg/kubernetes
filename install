@@ -1,4 +1,4 @@
-memory should be 4GB
+Note: memory should be 4GB and don't run as root
 sudo yum -y install epel-release
 sudo yum -y update
 sudo reboot
