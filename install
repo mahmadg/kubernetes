@@ -36,7 +36,7 @@ sed -e '/swap/s/^/#/g' -i /etc/fstab
 Step 5: Install Containerd
 sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 sudo dnf makecache
-sudo dnf -y install containerd.io
+sudo dnf -y install containerd.io --allowerasing
 cat /etc/containerd/config.toml
 sudo sh -c "containerd config default > /etc/containerd/config.toml" ; cat /etc/containerd/config.toml
 sudo vim /etc/containerd/config.toml  
