@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sedwss-verify-pfms
+kind: Pod
+metadata:
+  name: pfms-pod
+  namespace: sedwss-verify-pfms  # Namespace where the pod will be created
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx
