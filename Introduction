@@ -1,0 +1,27 @@
+Kubernetes is a powerful open-source platform for managing containerized workloads and services. 
+Here are its core components:
+
+1- API Server
+The front end of the Kubernetes control plane, which serves as the primary management point for administrators and users. It exposes the Kubernetes API, handling REST operations and coordinating the communication between other components.
+
+2- etcd
+A distributed key-value store that provides consistent storage for Kubernetes cluster data, including configuration details and state. It stores information about the entire cluster's current status and desired state, making it crucial for reliable cluster management.
+
+3- Scheduler
+Responsible for placing (or scheduling) new pods on appropriate nodes. It examines resource requirements, quality-of-service constraints, and other configurations to determine where each pod should run.
+
+4- Controller Manager
+Manages the various controllers in Kubernetes, which are background processes monitoring the cluster’s state and making adjustments to achieve the desired state. Examples include the Node Controller, Replication Controller, and Endpoints Controller.
+
+5- Kubelet
+An agent that runs on each node in the cluster. It ensures that containers are running in pods as expected, communicating with the API Server and monitoring the health and lifecycle of containers on the node.
+
+6- Kube Proxy
+Maintains network rules on nodes, allowing for network communication between different services. It ensures that each pod in the cluster can reach others, managing load balancing and communication within the network.
+
+7- Container Runtime
+The software responsible for running containers. Kubernetes supports several container runtimes, such as Docker, containerd, and CRI-O, which handle the actual operation of containers on nodes.
+
+8- Cloud Controller Manager (if deployed on a cloud provider)
+Integrates with the cloud provider's API, allowing Kubernetes to interact with cloud services. This component manages functions like load balancers, storage, and networking specific to the cloud environment.
+These components work together to manage containerized applications, automate deployments, and handle scaling and maintenance, forming the backbone of Kubernetes' powerful orchestration system.
