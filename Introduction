@@ -7,6 +7,7 @@ Here are its core components:
 The front end of the Kubernetes control plane, which serves as the primary management point for administrators and users. It exposes the Kubernetes API, handling REST operations and coordinating the communication between other components.
 
 2- etcd
+https://www.youtube.com/watch?v=OmphHSaO1sE&t=297s
 A distributed key-value store that provides consistent storage for Kubernetes cluster data, including configuration details and state. It stores information about the entire cluster's current status and desired state, making it crucial for reliable cluster management.
 
 3- Scheduler
