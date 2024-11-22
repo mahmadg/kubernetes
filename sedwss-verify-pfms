@@ -1,12 +1,13 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: sedwss-verify-pfms
+  name: apple
 kind: Pod
 metadata:
-  name: pfms-pod
-  namespace: sedwss-verify-pfms  # Namespace where the pod will be created
+  name: apple-pod
+  namespace: apple  # Namespace where the pod will be created
 spec:
   containers:
-  - name: nginx-container
-    image: nginx
+  - name: httpd-container
+    image: httpd:latest
+    port: 80
