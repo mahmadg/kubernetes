@@ -1,0 +1,2 @@
+ kubectl run orange-web --image=httpd:latest --namespace=orange
+kubectl run apple-web --image=httpd:latest --namespace=apple
