@@ -3,4 +3,4 @@ kubectl create namespace orange
 kubectl run orange-web --image=httpd:latest --namespace=orange
 kubectl run apple-web --image=httpd:latest --namespace=apple
 kubectl run orange-db --image=mysql:5.7 --namespace=orange --env="MYSQL_ROOT_PASSWORD=hello123" --env="MYSQL_DATABASE=orange-db" --env="MYSQL_USER=adam" --env="MYSQL_PASSWORD=hello123" --port=3306
-
+kubectl scale deployment deploy1.yaml --replicas=2
