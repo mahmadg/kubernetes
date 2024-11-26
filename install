@@ -10,7 +10,8 @@ sudo yum -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin d
 sudo systemctl enable docker --now
 sudo usermod -aG docker $USER && newgrp docker
 sudo curl -LO https://dl.k8s.io/release/v1.31.0/bin/linux/amd64/kubectl
-sudo chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+sudo chmod +x kubectl
+sudo mv kubectl /usr/local/bin/
 sudo curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
 /usr/local/bin/minikube start --driver=docker
