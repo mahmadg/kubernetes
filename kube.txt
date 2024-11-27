@@ -1,0 +1,114 @@
+kubectl get pods -n apple
+kubectl delete pods apple-pod
+kubectl delete pods apple-pod -n apple
+kubectl delete pods apple-pod
+kubectl get pods -n apple
+kubectl get pods
+kubectl delete pods httpd-mysql-deployment-fd8df7777-47t24
+kubectl get pods
+kubectl get pods -n apple
+kubectl get pods -n orange
+kubectl delete pods orange-db -n orange
+kubectl get pods -n orange
+kubectl get pods
+kubectl get namespace
+kubectl get pods
+kubectl get deployment
+kubectl get deployment -n orange
+kubectl get deployment -n apple
+kubectl create deployment dply1 --image=httpd --replicasets=2
+kubectl create deployment dply1 --image=httpd --replicaset=2
+kubectl create deployment dply1 --image=httpd --replicas=2
+kubectl get deployment -n apple
+  112  kubectl get deployment
+  113  kubectl get pods
+  114  kubectl delete deployment dply1
+  115  kubectl get pods
+  116  kubectl delete pods
+  117  kubectl delete orange1-web
+  118  kubectl delete pods orange1-web
+  122  kubectl apply -f httpmysql.yml
+  123  kubectl get deployment
+  126  kubectl delete deployment httpd-mysql-deployment
+  130  kubectl apply -f httpmysql.yml
+  132  kubectl apply -f apple.yml
+  133  kubectl get pods -n apple
+  136  kubectl apply -f apple.yml
+  138  kubectl apply -f apple.yml
+  140  kubectl apply -f apple.yml
+  141  kubectl get pods
+  142  kubectl get pods -n apple
+  143  kubectl get deployment -n apple
+  144  kubectl get deployment -n orange
+  145  kubectl get pods -n apple
+  146  kubectl delete pods -n apple
+  147  kubectl delete pods apple-pod -n apple
+  148  kubectl get pods -n apple
+  149  kubectl get deployment
+  150  kubectl get deployment -n orange
+  151  kubectl get deployment -n apple
+  155  kubectl get namespace
+  156  kubectl get pods -n orange
+  157  kubectl run orange-web --image=httpd:latest --namespace=orange --port=80
+  158  kubectl get pods -n orange
+  159  kubectl get pods -n orange -o wide
+  160  kubectl run orange-web --image=httpd:latest --namespace=orange --port=80 --targetPort=8080
+  161  kubectl run dmz-web --image=httpd:latest --port=8080
+  162  kubectl get pods
+  163  kubectl port-forward dmz-web 8080:8080
+  164  kubectl get pods
+  165  kubectl get pods -o wide
+  166  kubectl port-forward dmz-web 8080:8080
+  171  kubectl get pods
+  173  kubectl get namespace
+  174  kubectl get pods -n orange
+  175  kubectl get pods -n apple
+  176  kubectl create namespace ny
+  177  kubectl get namespace
+  178  kubectl get pod -n ny
+  179  kubectl run dmz-web --image=httpd --port=80
+  180  kubectl get pods
+  181  kubectl delete pods dmz-web
+  182  kubectl get pods
+  184  kubectl create deployment dmz-web --image=httpd --port=80 --replicas=3
+  185  kubectl get pods
+  186  kubectl get deployment
+  187  kubectl get pods
+  188  kubectl delete pods dmz-web-67cf5b5fdd-b9ppj
+  189  kubectl get pods
+  190  kubectl edit deployment dmz-web
+  191  kubectl get pods
+  192  kubectl edit deployment dmz-web
+  193  kubectl get pods
+  194  kubectl scale deployment dmz-web --replicas=5
+  195  kubectl get pods
+  196  kubectl scale deployment dmz-web --replicas=2
+  197  kubectl get pods
+  199  kubectl get pods
+  200  kubectl get pods -n orange
+  201  kubectl delete pods orange-web-f4bf75895-78wwr
+  202  kubectl delete pods orange-web -n orange
+  203  kubectl get pods -n orange
+  204  kubectl delete pods orange-web-f4bf75895-78wwr -n orange
+  205  kubectl get pods -n orange
+  206  kubectl run dmz-web --namespace=orange --image=nginx --port=8080
+  207  kubectl get pods -n orange
+  208  kubectl delete pods dmz-web
+  209  kubectl delete pods dmz-web -n orange
+  210  kubectl delete deployment orange-web
+  211  kubectl delete deployment orange-web -n orange
+  212  kubectl get pods -n orange
+  213  kubectl get pods -n apple
+  214  kubectl get pods
+  215  kubectl get deployment
+  216  kubectl delete depoyment dmz-web
+  217  kubectl delete deployment dmz-web
+  218  kubectl get deployment
+  219  kubectl get namespace
+  220  kubectl delete namesapce ny
+  221  kubectl delete namespace ny
+  222  kubectl get namespace
+  223  kubectl delete namespace orange
+  224  kubectl delete namespace apple
+  225  kubectl get namespace
+  226  history | grep kubectl
