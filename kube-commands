@@ -1,0 +1,102 @@
+Here are some useful Kubernetes (kubectl) practice commands categorized by their functions:
+
+1. Basic Cluster Information
+sh
+Copy
+Edit
+kubectl version                   # Check client and server version
+kubectl cluster-info              # Get cluster info
+kubectl get nodes                 # List all nodes in the cluster
+kubectl describe node <node-name> # Get detailed info about a specific node
+kubectl get componentstatuses     # Check health of Kubernetes components
+2. Working with Namespaces
+sh
+Copy
+Edit
+kubectl get namespaces              # List all namespaces
+kubectl create namespace my-namespace  # Create a new namespace
+kubectl delete namespace my-namespace  # Delete a namespace
+kubectl config set-context --current --namespace=my-namespace # Set default namespace
+3. Working with Pods
+sh
+Copy
+Edit
+kubectl get pods                    # List all pods
+kubectl get pods -o wide             # List pods with more details
+kubectl describe pod <pod-name>      # Get detailed info about a pod
+kubectl logs <pod-name>              # Fetch logs of a pod
+kubectl exec -it <pod-name> -- /bin/sh  # Access a running pod's shell
+kubectl delete pod <pod-name>        # Delete a pod
+kubectl get pods --all-namespaces    # List pods in all namespaces
+4. Working with Deployments
+sh
+Copy
+Edit
+kubectl get deployments                     # List deployments
+kubectl create deployment nginx --image=nginx  # Create a deployment
+kubectl scale deployment nginx --replicas=3    # Scale deployment replicas
+kubectl describe deployment nginx            # Get details of a deployment
+kubectl delete deployment nginx              # Delete a deployment
+kubectl rollout status deployment nginx      # Check deployment rollout status
+kubectl rollout history deployment nginx     # View rollout history
+kubectl rollout undo deployment nginx        # Rollback to previous deployment
+5. Working with Services
+sh
+Copy
+Edit
+kubectl get services                     # List all services
+kubectl expose deployment nginx --type=NodePort --port=80   # Expose a deployment as a service
+kubectl describe service nginx            # Get details of a service
+kubectl delete service nginx              # Delete a service
+kubectl port-forward pod/nginx 8080:80    # Port forward to access a service
+6. Working with ConfigMaps & Secrets
+sh
+Copy
+Edit
+kubectl create configmap my-config --from-literal=key1=value1  # Create ConfigMap
+kubectl get configmaps                      # List all ConfigMaps
+kubectl describe configmap my-config        # Get details of a ConfigMap
+kubectl delete configmap my-config          # Delete a ConfigMap
+
+kubectl create secret generic my-secret --from-literal=password=12345  # Create Secret
+kubectl get secrets                           # List all secrets
+kubectl describe secret my-secret             # Get details of a secret
+kubectl delete secret my-secret               # Delete a secret
+7. Working with Persistent Volumes & Claims
+sh
+Copy
+Edit
+kubectl get pv                                # List all persistent volumes
+kubectl get pvc                               # List all persistent volume claims
+kubectl describe pvc my-pvc                   # Get details of a PVC
+kubectl delete pvc my-pvc                     # Delete a PVC
+8. Troubleshooting & Debugging
+sh
+Copy
+Edit
+kubectl get events                            # List recent events
+kubectl get pods --sort-by=.metadata.creationTimestamp  # List pods by creation time
+kubectl get pods --field-selector=status.phase=Running  # Filter running pods
+kubectl logs <pod-name> -f                     # Stream logs in real-time
+kubectl get all                                # Get all resources in the namespace
+kubectl top pod                                # Check pod resource usage
+kubectl top node                               # Check node resource usage
+9. Working with YAML Manifests
+sh
+Copy
+Edit
+kubectl create -f my-deployment.yaml          # Create resources from YAML
+kubectl apply -f my-deployment.yaml           # Apply changes from YAML
+kubectl delete -f my-deployment.yaml          # Delete resources from YAML
+kubectl get -f my-deployment.yaml             # Get resources from YAML
+10. Working with Jobs & CronJobs
+sh
+Copy
+Edit
+kubectl create job my-job --image=busybox -- echo "Hello Kubernetes"  # Create a job
+kubectl get jobs                                # List all jobs
+kubectl delete job my-job                       # Delete a job
+
+kubectl create cronjob my-cron --schedule="*/5 * * * *" --image=busybox -- echo "Hello"  # Create a CronJob
+kubectl get cronjobs                            # List all CronJobs
+kubectl delete cronjob my-cron                   # Delete a CronJob
